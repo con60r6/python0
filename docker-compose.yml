@@ -1,9 +1,9 @@
 version: "3.5"
 
 networks:
-  python_hello_network:
+  python_network:
     driver: bridge
-    name: python_hello_network
+    name: python_network
     ipam:
       driver: default
 
@@ -12,16 +12,16 @@ services:
     container_name: nginx
     image: nginx:latest
     depends_on:
-      - python_hello
+      - python
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
       - 8080:80
     networks:
-      - python_hello_network
+      - python_network
 
-  python_hello:
-    container_name: python_hello
+  python:
+    container_name: python
     build:
       context: .
       dockerfile: Dockerfile.python
@@ -30,4 +30,4 @@ services:
     volumes:
       - ./app:/app
     networks:
-      - python_hello_network
+      - python_network
